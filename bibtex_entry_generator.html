@@ -1,0 +1,1383 @@
+<html>
+   <script>
+      var TYPE = 'biblatex';
+   </script>
+   <head>
+      <title>Bib(la)tex entry generator</title>
+      <meta charset="UTF-8"> 
+        <style type="text/css">
+            body{
+                /*background: #0d0d0d;*/
+            }
+            body, textarea, input, select, h1, h2, h3, h4, h5, h6, p, li {
+                /*color: #e6e6e6;*/
+            }
+            textarea, input, h1, h2, p, td {
+                font-family: Ubuntu;
+            }
+            h1 {
+               font-size: 24pt;
+            }
+            h2 {
+               font-size: 20pt;
+            }
+            pre {
+                /*background-color: #404040;*/ /* or #262626 */
+            }
+            code {
+                /*background-color: #404040;*/ /* or #262626 */
+                background-color: lightgrey;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            textarea {
+                /*background-color: #0d0d0d;*/ /* or #262626 */
+            }
+            input {
+                /*background-color: #1f1f1f;*/ /* or #262626 */
+            }
+            p, input, td, li {
+                font-size: 16pt;
+            }
+            textarea {
+                font-size: 12pt;
+            }
+            input[type="TEXTBOX"] {
+               border: 0px solid black;
+               font-weight: bold;
+               background-color: lightgrey;
+            }
+            .description {
+               font-size: 12pt;
+               color: #AAAAAA;
+            }
+            table td:first-child {
+               padding-right: 15px;
+            }
+            td {
+               vertical-align: top;
+            }
+            div#main {
+               width: 800px;
+               margin: 0 auto;
+            }
+            div.frame {
+               border: black 1px solid;
+               padding: 15px;
+               margin-top: 15px;
+            }
+            div.frame h2 {
+               margin-top: 0px;
+               margin-bottom: 0px;
+            }
+        </style>
+   </head>
+   <body>
+
+   <div id="main">
+
+      <div id="explainBiblatex">
+      <h1>Bib(la)tex entry generator</h1>
+
+      <p>See the <a href="http://boberle.com/projects/bibtex_entry_generator/">help page</a>.</p>
+
+      <p>Add a <a href="#article">press or research article</a>.</p>
+
+      <p>Or a <a href="#book">book</a>, that is a work where the authors share
+      credit for the work as a whole.  (Also covers the @inbook entry type of
+      bibtex: when you want to cite a chapter or an appendix, just use @book
+      and specify the pages number of the chapter with the cite command.)</p>
+
+      <p>Or a <a href="#proceedings">proceedings</a> or a <a
+      href="#collection">collection</a>, that is, multiple, self-contained
+      contributions by distinct authors.  If it's a book with several
+      contributions, it's a <a href="#collection">collection.</a>  If it's a
+      proceedings conference, then use <a
+      href="#proceedings">proceedings</a>.</p>
+
+      <p>Or a work of <a href="#reference">reference</a> such as an
+      encyclopedia or a dictionary.  This is a more specific variant of the
+      generic <a href="#collection">collection</a> entry type. The standard
+      styles will treat this entry type as an alias for <a
+      href="#collection">collection</a>.</p>
+
+      <p>Or a part of the previous types:</p>
+      <ul>
+         <li><a href="#inbook">inbook</a>, a self-contained part of a book. This is
+         not what you want (you're looking for <a href="#book">@book</a> or <a
+         href="#incollection">@incollection</a>).  @inbook is very specific.  To
+         cite a part of a book in the manner of bibtex, just use <a
+         href="#book">@book</a> and specify the page or chapter number(s) with the
+         cite command.  Use <a href="#inbook">@inbook</a> to cite a self contained
+         part of a book, like an essay or a lengthy preface/introduction to a
+         translation, etc.,</li>
+         <li><a href="#inproceedings">inproceedings</a>, a contribution to a
+         conference proceedings,</li>
+         <li><a href="#incollection">incollection</a>, a contribution to a
+         collection,</li>
+         <li><a href="#inreference">inreference</a>, an article in a
+         reference.</li>
+      </ul>
+
+      <p>Or a <a href="#manual">technical manual</a> or other
+      documentation.</p>
+
+      <p>Or a thesis:</p>
+      <ul>
+      <li>Use <a href="#phdthesis">pdhthesis</a> or <a
+      href="#masterthesis">masterthesis</a>.</li>
+      <li>You also may use the "type" field of <a href="#thesis">thesis</a> to
+      specify "phd thesis", "master thesis" or "thèse de doctorat", but it's
+      better to use the specialized types <a href="#phdthesis">pdhthesis</a> or <a
+      href="#masterthesis">masterthesis</a>: this way the
+      type will be translated into French automatically.</li>
+      </ul>
+
+      <p>Or a <a href="#online">web site or web page (online)</a>.</p>
+
+      <p>Or a <a href="#periodical">periodical</a> when you want to cite not a
+      specific article in a journal, but a whole (special and thematic)
+      issue.</p>
+
+      <p>Or a <a href="#techreport">technical report</a>, or another type of
+      <a href="#report">report</a> (research report, white paper...) (use the
+      "type" field to specify the type).</p>
+
+      <p>Or <a href="#misc">something else (misc)</a>. Use the field
+      "howpublished" to supply publishing information in free format.</p>
+      </div>
+
+      <div id="explainBibtex">
+      <h1>Bibtex entry generator</h1>
+      <p>What do you want to add?</p>
+      <li><a href="#article">article</a>: An article from a journal or magazine.</li>
+      <li><a href="#book">book</a>: A book with an explicit publisher.</li>
+      <li><a href="#proceedings">proceedings</a>: The proceedings of a conference.</li>
+      <li><a href="#inproceedings">inproceedings</a>: An article in a conference proceedings.</li>
+      <li><a href="#incollection">incollection</a>: A part of a book having its own title.</li>
+      <li><a href="#phdthesis">phdthesis</a>: A Ph.D. thesis.</li>
+      <li><a href="#mastersthesis">mastersthesis</a>: A Master's thesis.</li>
+      <li><a href="#inbook">inbook</a>: A part of a book, usually untitled. May be a chapter (or section, etc.) and/or a range of pages.</li>
+      <li><a href="#techreport">techreport</a>: A report published by a school or other institution, usually numbered within a series.</li>
+      <li><a href="#manual">manual</a>: Technical documentation.</li>
+      <li><a href="#booklet">booklet</a>: A work that is printed and bound, but without a named publisher or sponsoring institution.</li>
+      <li><a href="#misc">misc</a>: For use when nothing else fits.</li>
+      <li><a href="#unpublished">unpublished</a>: A document having an author and title, but not formally published.</li>
+      <p>Source: <a href="https://en.wikipedia.org/wiki/BibTeX">wikipedia</a>.</p>
+      </div>
+
+   </div>
+
+   <script>
+
+   /*** Constants ****************************************************/
+
+   const OPT = 0;
+   const REQ = 1;
+
+   const BIBTEX = 0;
+   const FLAGS = 1;
+   const DESCR = 2;
+
+
+   /*** Data *********************************************************/
+
+
+   /*
+    * `data` is a dictionary of dictionary:
+    *    {
+    *      BIBLATEX_ENTRY_TYPE: {
+    *         description: "shown on the web page, below the heading",
+    *         biblatex_field: [
+    *            ['BIBTEX_FIELD', 'BIBTEX_FIELD', ...], # or null
+    *            REQ|OPT, # these are constants
+    *            FIELD_DESCRIPTION # or null
+    *         ],
+    *         other_biblatex_field: {...},
+    *         ...
+    *      }
+    *    }
+    *
+    * The BIBTEX_FIELDs are the fields used to locate the correct field when
+    * parsing a bibtex entry from Google Scholar and friends.  For example:
+    *    date:[['year'], REQ, null]
+    * since `year` is bibtex and must be put in the `date` field.  Put null to
+    * copy the name of the biblatex_field.
+    * 
+    * FIELD_DESCRIPTION is the description written below the textbox.  Put
+    * null to remove the description.  Descriptions may also be put in
+    * `field_descriptions`.  In this case FIELD_DESCRIPTION, if not null,
+    * takes precedence.
+    */
+
+   var data_biblatex = {
+
+      //book: {
+      //   heading:     'A book (test)',
+      //   description: 'This is the description...',
+      //   title:      [null, REQ, null],
+      //   subtitle:   [null, OPT, null],
+      //   author:     [null, OPT, null],
+      //   date:       [['year'], OPT, null]
+      //},
+
+      article: {
+         heading:     'An article',
+         description: 'Press or research article.',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         journaltitle:  [['journal'], REQ, null],
+         publisher:     [null, OPT, null],
+         date:          [['year'], REQ, null],
+         issuetitle:    [null, OPT, null],
+         volume:        [null, OPT, null],
+         number:        [null, OPT, null], // journal
+         issue:         [null, OPT, null],
+         pages:         [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      book: {
+         heading:     'A book',
+         description: 'A book where the authors share credit for the work as a whole.  Also covers the @inbook entry type of bibtex: when you want to cite a chapter or an appendix, just use @book and specify the pages number of the chapter with the cite command.', 
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      proceedings: {
+         heading:     'A proceedings',
+         description: "If it's not a conference proceedings, just use @collection.",
+         editor:        [null, REQ, null],
+         label:         [null, OPT, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         organization:  [null, OPT, 'sponsoring organization'],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      collection: {
+         heading:     'A collection',
+         description: "Multiple, self-contained contributions by distinct authors.  If it's a book with several contributions, it's a @collection.  If it's a proceedings collection, then use @proceedings.",
+         editor:        [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      reference: {
+         heading:     'A reference',
+         description: 'A work of reference such as an encyclopedia or a dictionary.  This is a more specific variant of the generic @collection entry type. The standard styles will treat this entry type as an alias for @collection.',
+         editor:        [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      inbook: {
+         heading:     'A self-contained part of a book',
+         description: "This is not what you want (you're looking for @book or @incollection).  @inbook is very specific.  To cite a part of a book in the manner of bibtex, just use @book and specify the page or chapter number(s) with the cite command.  Use @inbook to cite a self contained part of a book, like an essay or a lengthy preface/introduction to a translation, etc.", 
+         author:        [null, REQ, null],
+         bookauthor:    [null, OPT, null],
+         editor:        [null, OPT, null],
+         booktitle:     [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         pages:         [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      inproceedings: {
+         heading:     'A contribution to a proceedings',
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         booktitle:     [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         organization:  [null, OPT, 'sponsoring organization'],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         pages:         [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      incollection: {
+         heading:     'A contribution to a collection',
+         description: "If the collection is a proceedings, use @inproceedings.",
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         booktitle:     [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         pages:         [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      inreference: {
+         heading:     'An article in a reference',
+         description: 'This is a more specific variant of the generic @incollection entry type. The standard styles will treat this entry type as an alias for @incollection.',
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         booktitle:     [null, REQ, null],
+         title:         [null, REQ, null],
+         volumes:       [null, OPT, null],
+         volume:        [null, OPT, 'the volume number, if there are several volumes'],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, 'a number'],
+         pagetotal:     [null, OPT, null],
+         pages:         [null, OPT, null],
+         series:        [null, OPT, 'the name of the series'],
+         number:        [null, OPT, 'the number in the series'], // book
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      manual: {
+         heading:     'A technical manual',
+         description: 'Technical or other documentation.',
+         author:        [null, REQ, null],
+         editor:        [null, OPT, "Author or editor or both"],
+         label:         [null, OPT, "Use label if there is no author/editor for the author-year style"],
+         title:         [null, REQ, null],
+         organization:  [null, OPT, null],
+         date:          [['year'], REQ, null],
+         publisher:     [null, OPT, null],
+         location:      [null, OPT, null],
+         edition:       [null, OPT, null],
+         version:       [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      phdthesis: {
+         heading:     'A PhD Thesis',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         institution:   [['school'], REQ, null],
+         date:          [['year'], REQ, null],
+         location:      [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      masterthesis: {
+         heading:     'A Master Thesis',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         institution:   [['school'], REQ, null],
+         date:          [['year'], REQ, null],
+         location:      [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      thesis: {
+         heading:     'Another Thesis Type',
+         desciption:  'You may use the "type" field to specify "phd thesis", "master thesis" or "thèse de doctorat", but it\'s better to use the specialized type @phdthesis, @mastersthesis: this way the type will be translated into French automatically.',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         institution:   [['school'], REQ, null],
+         date:          [['year'], REQ, null],
+         type:          [null, REQ, null],
+         location:      [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      online: {
+         heading:     'A web site or a web page',
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         label:         [null, OPT, null],
+         title:         [null, REQ, null],
+         date:          [['year'], REQ, null],
+         organization:  [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+
+      periodical: {
+         heading:     'A periodical (whole issue of a journal)',
+         desciption:  'When you want to cite not a specific article in a journal, but a whole (special and thematic) issue.  The journal name goes into "title" and the issue title goes into "issuetitle".',
+         editor:        [null, REQ, null],
+         label:         [null, OPT, null],
+         title:         [null, REQ, null],
+         issuetitle:    [null, OPT, null],
+         date:          [['year'], REQ, null],
+         volume:        [null, OPT, null],
+         number:        [null, OPT, null], // journal
+         issue:         [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+
+      techreport: {
+         heading:     'A technical report',
+         desciption:  'Like "report" but the "type" field is automatically filled.',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         institution:   [null, REQ, null],
+         date:          [['year'], REQ, null],
+         version:       [null, OPT, null],
+         location:      [null, OPT, null],
+         note:          [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      report: {
+         heading:     'Another report',
+         desciption:  'A research report, a white paper...',
+         author:        [null, REQ, null],
+         title:         [null, REQ, null],
+         institution:   [null, REQ, null],
+         date:          [['year'], REQ, null],
+         type:          [null, REQ, null],
+         version:       [null, OPT, null],
+         location:      [null, OPT, null],
+         note:          [null, OPT, null],
+         pagetotal:     [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+      misc: {
+         heading:     'Misc',
+         description: 'Use the field howpublished to supply publishing information in free format.',
+         author:        [null, REQ, null],
+         editor:        [null, OPT, null],
+         label:         [null, OPT, null],
+         title:         [null, REQ, null],
+         date:          [['year'], REQ, null],
+         organization:  [null, OPT, null],
+         howpublished:  [null, OPT, null],
+         location:      [null, OPT, null],
+         url:           [null, OPT, null],
+         urldate:       [null, OPT, null],
+         crossref:      [null, OPT, null],
+      },
+
+   };
+
+
+   var data_bibtex = {
+
+      article: {
+         heading: "@article",
+         description: "An article from a journal or magazine.",
+         author: 		[null, REQ, null],
+         title: 		[null, REQ, null],
+         journal: 	[null, REQ, null],
+         year: 		[["date"], REQ, null],
+         volume: 		[null, REQ, null],
+         number: 		[null, OPT, null],
+         pages: 		[null, OPT, null],
+         month: 		[null, OPT, null],
+         note: 		[null, OPT, null],
+         crossref: 	[null, OPT, null],
+         key: 		   [null, OPT, null],
+      },
+
+
+      book: {
+         heading: "@book",
+         description: "A book with an explicit publisher.",
+         author: 		[null, REQ, null],
+         editor: 		[null, OPT, "if no author, you must provide an editor"],
+         title: 		[null, REQ, null],
+         publisher: 	[null, REQ, null],
+         year: 		[["date"], REQ, null],
+         number: 		[null, OPT, null],
+         series: 		[null, OPT, null],
+         address: 	[null, OPT, null],
+         edition: 	[null, OPT, null],
+         month: 		[null, OPT, null],
+         note: 		[null, OPT, null],
+         key: 		   [null, OPT, null],
+      },
+
+
+      proceedings: {
+         heading: "@proceedings",
+         description: "The proceedings of a conference.",
+         title: 		   [null, REQ, null],
+         year: 		   [["date"], REQ, null],
+         editor: 		   [null, OPT, null],
+         volume:        [null, OPT, null],
+         number:        [null, OPT, null],
+         series: 		   [null, OPT, null],
+         address: 	   [null, OPT, null],
+         month: 		   [null, OPT, null],
+         publisher: 	   [null, OPT, null],
+         organization: 	[null, OPT, null],
+         note: 		   [null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      inproceedings: {
+         heading: "@inproceedings",
+         description: "An article in a conference proceedings.",
+         author: 		   [null, REQ, null],
+         title: 		   [null, REQ, null],
+         booktitle: 		[null, REQ, null],
+         year: 		   [["date"], REQ, null],
+         editor: 		   [null, OPT, null],
+         volume: 		   [null, OPT, null],
+         number: 		   [null, OPT, null],
+         series: 		   [null, OPT, null],
+         pages: 		   [null, OPT, null],
+         address: 		[null, OPT, null],
+         month: 		   [null, OPT, null],
+         organization: 	[null, OPT, null],
+         publisher: 		[null, OPT, null],
+         note: 		   [null, OPT, null],
+         crossref: 		[null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      incollection: {
+         heading: "@incollection",
+         description: "A part of a book having its own title.",
+         author: 		   [null, REQ, null],
+         title: 		   [null, REQ, null],
+         booktitle: 		[null, REQ, null],
+         publisher: 		[null, REQ, null],
+         year: 		   [["date"], REQ, null],
+         editor: 		   [null, OPT, null],
+         volume: 		   [null, OPT, null],
+         number: 		   [null, OPT, null],
+         series: 		   [null, OPT, null],
+         type: 		   [null, OPT, null],
+         chapter: 		[null, OPT, null],
+         pages: 		   [null, OPT, null],
+         address: 		[null, OPT, null],
+         edition: 		[null, OPT, null],
+         month: 		   [null, OPT, null],
+         note: 		   [null, OPT, null],
+         crossref: 		[null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      phdthesis: {
+         heading: "@phdthesis",
+         description: "A Ph.D. thesis.",
+         title: 		[null, REQ, null],
+         author: 		[null, REQ, null],
+         school: 		[null, REQ, null],
+         year: 		[["date"], REQ, null],
+         type: 		[null, OPT, null],
+         address: 	[null, OPT, null],
+         month: 		[null, OPT, null],
+         note: 		[null, OPT, null],
+         key: 		   [null, OPT, null],
+      },
+
+
+      mastersthesis: {
+         heading: "@mastersthesis",
+         description: "A Master's thesis.",
+         title: 		[null, REQ, null],
+         author: 		[null, REQ, null],
+         school: 		[null, REQ, null],
+         year: 		[["date"], REQ, null],
+         type: 		[null, OPT, null],
+         address: 	[null, OPT, null],
+         month: 		[null, OPT, null],
+         note: 		[null, OPT, null],
+         key: 	      [null, OPT, null],
+      },
+
+
+      inbook: {
+         heading: "@inbook",
+         description: "A part of a book, usually untitled. May be a chapter (or section, etc.) and/or a range of pages.",
+         title: 		   [null, REQ, null],
+         author: 		   [null, REQ, null],
+         editor: 		   [null, OPT, "if no author, you must provide an editor"],
+         pages: 		   [null, REQ, null],
+         chapter: 		[null, OPT, "if no pages, you must provide a chapter"],
+         publisher: 		[null, REQ, null],
+         year: 		   [["date"], REQ, null],
+         volume:        [null, OPT, null],
+         number:        [null, OPT, null],
+         series: 		   [null, OPT, null],
+         type: 		   [null, OPT, null],
+         address: 		[null, OPT, null],
+         edition: 		[null, OPT, null],
+         month: 		   [null, OPT, null],
+         note: 		   [null, OPT, null],
+         crossref: 		[null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      techreport: {
+         heading: "@techreport",
+         description: "A report published by a school or other institution, usually numbered within a series.",
+         author: 		   [null, REQ, null],
+         title: 		   [null, REQ, null],
+         institution: 	[null, REQ, null],
+         year: 		   [["date"], REQ, null],
+         type: 		   [null, OPT, null],
+         number: 		   [null, OPT, null],
+         address: 	   [null, OPT, null],
+         month: 		   [null, OPT, null],
+         note: 		   [null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      manual: {
+         heading: "@manual",
+         description: "Technical documentation.",
+         title: 		   [null, REQ, null],
+         author: 		   [null, OPT, null],
+         organization: 	[null, OPT, null],
+         address: 	   [null, OPT, null],
+         edition: 	   [null, OPT, null],
+         month: 		   [null, OPT, null],
+         year: 		   [["date"], OPT, null],
+         note: 		   [null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      booklet: {
+         heading: "@booklet",
+         description: "A work that is printed and bound, but without a named publisher or sponsoring institution.",
+         title: 		   [null, REQ, null],
+         author: 		   [null, OPT, null],
+         howpublished: 	[null, OPT, null],
+         address: 		[null, OPT, null],
+         month: 		   [null, OPT, null],
+         year: 		   [["date"], OPT, null],
+         note: 		   [null, OPT, null],
+         key: 		      [null, OPT, null],
+      },
+
+
+      misc: {
+         heading: "@misc",
+         description: "For use when nothing else fits.",
+         title: 		   [null, OPT, null],
+         author: 		   [null, OPT, null],
+         howpublished: 	[null, OPT, null],
+         month: 		   [null, OPT, null],
+         year: 		   [["date"], OPT, null],
+         note: 		   [null, OPT, null],
+         key: 		      [null, OPT, null],
+         url: 		      [null, OPT, null],
+      },
+
+
+      unpublished: {
+         heading: "@unpublished",
+         description: "A document having an author and title, but not formally published.",
+         author: 		[null, REQ, null],
+         title: 		[null, REQ, null],
+         note: 		[null, REQ, null],
+         year: 		[["date"], OPT, null],
+         month: 		[null, OPT, null],
+         key: 		   [null, OPT, null],
+      },
+
+   };
+
+
+
+   /*
+    * Field descriptions to be put under the field textbox.  These are common
+    * field descriptions, you can override them in the `data` dictionary.
+    */
+
+   var field_descriptions_biblatex = {
+      author: 'lastname, firstname and lastname, firstname',
+      editor: 'lastname, firstname and lastname, firstname',
+      issuetitle: 'if the issue is thematic and has its own title',
+      issuesubtitle: 'if the issue is thematic and has its own title',
+      date: '2000; 2000-01; 2000-01-01; 2000/2001; 2000-01-01/2001-01-02; 2000/',
+      volume: 'a number, usually one per year (year count: 1, 2, 3...)',
+      volumes: 'the total number of volumes', // for a book
+      number: 'the issue number (eg 1 to 4, each year)', // for journals
+      issue: '"spring", "fall", etc.  (when there is no number)',
+      month: 'a number, when the issue was published',
+      pages: "the pages where the paper is found, eg. 500-600, don't "
+         + "confuse with 'pagetotal'",
+      pagetotal: "the total number of pages, eg. 563; don't confuse with "
+         + "'pages'",
+      urldate: "2000; 2000-01; 2000-01-01; 2000/2001; 2000-01-01/2001-01-02; "
+         + "2000/",
+      label: "if you don't provide an author/editor and you use an "
+         + "author-year style",
+   };
+
+   var field_descriptions_bibtex = {
+      address: "publisher's address (usually just the city)",
+      author: 'lastname, firstname and lastname, firstname',
+      chapter: "a number",
+      edition: "use a long form, like 'First' or 'Second'",
+      editor: 'lastname, firstname and lastname, firstname',
+      key: "hidden field used for sorting when author/editor is missing",
+      month: "month with 3 letters (jan, feb, mar...), don't use any {}! eg: \"month = mar,\"",
+      number: "the issue number of a journal (usually starts at 1 each year, eg 1 and 2 if bi-annual)",
+      pages: "page numbers, like \"1--39\", NOT the total number of pages",
+      volume: "volume of a journal (usually incremental since the first time the journal was published) or for multi-volume book",
+   };
+
+
+   /*
+    * Copy the correct data and field descriptions.
+    */
+
+   var data;
+   var field_descriptions;
+
+   if (TYPE == 'biblatex') {
+      document.getElementById("explainBibtex").style.display = "none";
+      data = data_biblatex;
+      field_descriptions = field_descriptions_biblatex;
+   } else {
+      document.getElementById("explainBiblatex").style.display = "none";
+      data = data_bibtex;
+      field_descriptions = field_descriptions_bibtex;
+   }
+
+
+   /*
+    * Dictionary to convert diacritics to tex form, eg "é" to "{\'}e".
+    */
+
+   var tex2diac = {
+      "'":['eé', 'aá'],
+      "`":['eè', 'aà', 'uù'],
+      '"':['eë', 'aä', 'uü', 'oö', 'iï'],
+      '^':['eê', 'aâ', 'uû', 'oô', 'iî'],
+      'c':['cç'],
+   }
+
+   var diac2tex = {}; // autofill from tex2diac
+   for (var diac in tex2diac) {
+      for (var letter of tex2diac[diac]) {
+         diac2tex[letter[1]] = '{\\' + diac + letter[0] + '}';
+      }
+   }
+
+
+   /*
+    * Each heading-description-textboxes are on their own div, so they can be
+    * expanded or collapsed: { BIBLATEX_TYPE: DIV }
+    */
+
+   var divs = {};
+
+   /*
+    * All the textboxes are here: textboxes[name][field] = TEXTBOX
+    */
+
+   var textboxes = {};
+
+   /* The `buttons` variable doesn't contain any buttons, it's a dictionary
+    * that contains at the same time "Parse" buttons and "Go" buttons:
+    * - for go:
+    *    { ID: {
+    *             entryType: entry_type,
+    *             textarea: area,
+    *             textboxes: textboxes[name],
+    *             data: data[name]
+    *    }
+    * - for parse:
+    *    { ID: {
+    *             textarea: area,
+    *             textboxes: textboxes[name],
+    *             data: data[name],
+    *             logdiv: logdiv,
+    *          },
+    *    }
+    */
+
+   var buttons = {};
+
+   
+   /*** helper functions *********************************************/
+
+   /*
+    * Remove the diacritics and return the string: é -> e.
+    */
+
+   function removeDiacritics(str) {
+      var data = ["aàáâãäå", "cç", "eèéêë", "iìíîï", "nñ", "oòóôõöø",
+         "uùúûü"]
+      for (var letters of data) {
+         var key = letters[0];
+         for (var value of letters.substr(1)) {
+            str = str.replace(new RegExp(value, 'g'), key);
+         }
+      }
+      return str;
+   }
+
+
+   /*
+    * Parse a bibtex (eg from Google Scholar) and return a dictionary (field
+    * -> value), or null on error.
+    */
+
+   function parseBibtex(str) {
+      var lines = [];
+      var incomplete = false;
+      str = str.replace(/^@\w+{[^,]+,\s*/, '');
+      str = str.replace(/\s*\}\s*$/, '');
+      for (line of str.split(/\n+/)) {
+         if (incomplete) {
+            lines[lines.length-1] += ' '+line;
+         } else {
+            lines.push(line);
+         }
+         if (/\},\s*$/.test(line)) {
+            incomplete = false;
+         } else {
+            incomplete = true;
+         }
+      }
+      //console.log(lines);
+      var res = {};
+      for (var i=0; i<lines.length; i++) {
+         var s = lines[i];
+         s = s.replace(/\s+/, ' ');
+         m = s.match(/\s*(\w+)\s*=\s*\{(.*)\}\s*/);
+         //console.log(m);
+         if (m) {
+            var field = m[1];
+            var value = m[2];
+            res[field] = value;
+         } else {
+            alert("can't process line: '"+s+"'");
+            return null;
+         }
+      }
+      return res;
+   }
+
+
+
+   /*** text transformation ******************************************/
+
+
+   /*
+    * Try to guess where upper case letters are and add brackets around them.
+    */
+
+   function add_brackets_around_uppercase(value) {
+      var tokens = Array();
+      var last_is_letter = undefined;
+      for (var l of value) {
+         if (/[^a-zßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿœα-ω]/i.test(l)) {
+            if (last_is_letter === true || last_is_letter === undefined) {
+               tokens.push("");
+            }
+            tokens[tokens.length-1] += l;
+            last_is_letter = false;
+         } else {
+            if (last_is_letter === false || last_is_letter === undefined) {
+               tokens.push("");
+            }
+            tokens[tokens.length-1] += l;
+            last_is_letter = true;
+         }
+      }
+      if (tokens[tokens.length-1] == "") {
+         tokens.pop();
+      }
+      var str = ""
+      for (token of tokens) {
+         if (token.length > 1 && (token.substring(1)
+               .search(/[A-ZSSÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŸŒΑ-Ω]/) != -1)) {
+            str += "{" + token + "}";
+         } else {
+            str += token;
+         }
+      }
+      return str;
+   }
+
+
+   /*
+    * Make a key from authors and date.  See `getKeyAndFields` to get these
+    * values.
+    */
+
+   function getKey(authors, date) {
+      var res = "";
+      var counter = 0;
+      for (author of authors.split(/\s+and\s+/i)) {
+         var name = author.split(/\s*,\s*/)[0];
+         name = name.replace(/[^a-zßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿœα-ω]/gi, '');
+         if (counter < 3) {
+            res += name;
+         } else {
+            var upper =
+               name.replace(/[a-zßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿœα-ω]/g, '');
+            res += upper;
+         }
+         counter++;
+      }
+      res = removeDiacritics(res);
+      if (m = /\d{4}/.exec(date)) {
+         res += "-" + m[0];
+      }
+      return res;
+   }
+
+   
+   /*
+    * Make a key from the textboxes.
+    */
+
+   function getKeyAndFields(textboxes) {
+      var authors = "";
+      var date = "";
+      if ('author' in textboxes) {
+         authors = textboxes['author'].value;
+      } else if ('author' in textboxes) {
+         authors = textboxes['editor'].value;
+      }
+      if ('date' in textboxes) {
+         date = textboxes['date'].value;
+      } else if ('year' in textboxes) {
+         date = textboxes['year'].value;
+      }
+      return getKey(authors, date);
+   }
+
+
+   /*
+    * Transform {\'}e -> é.
+    */
+
+   function to_unicode (str) {
+      for (var diac in tex2diac) {
+         for (var letter of tex2diac[diac]) {
+            for (var esc of ['\\', '']) {
+               str = str.replace(
+                  new RegExp('\{\\\\'+esc+diac+'\}'+letter[0], 'g'),
+                  letter[1]);
+               str = str.replace(
+                  new RegExp('\\\\'+esc+diac+'{'+letter[0]+'}', 'g'), letter[1]);
+               str = str.replace(
+                  new RegExp('\{'+'\\\\'+esc+diac+' '+letter[0]+'\}', 'g'), letter[1]);
+               for (var slash of ['\\\\', '']) {
+                  str = str.replace(
+                     new RegExp('\\\\'+esc+diac+slash+letter[0], 'g'), letter[1]);
+               }
+            }
+         }
+      }
+      str = str.replace(/’/g, "'");
+      str = str.replace(/\{/g, '').replace(/\}/g, '');
+      str = add_brackets_around_uppercase(str);
+      return str;
+   }
+
+
+   /*
+    * Transform é -> {\'}e.
+    */
+
+   function to_bibtex(str) {
+      for (var diac in diac2tex) {
+         str = str.replace(new RegExp(diac, 'g'), diac2tex[diac]);
+         str = str.replace(/’/g, "'");
+      }
+      return str;
+   }
+
+
+
+   /*** controls *****************************************************/
+
+
+   function addExpandCollapseAllButtons() {
+      var div = document.getElementById('main');
+      var p = document.createElement('P');
+      div.appendChild(p);
+      p.style.textAlign = 'center';
+      var button = document.createElement('INPUT');
+      button.type = 'BUTTON';
+      button.value = 'Collpase All';
+      button.onclick = function() {
+         for (e of document.getElementsByTagName('H2')) {
+            if (e.innerHTML.substring(0, 1) == "+" || e.innerHTML.substring(0, 1) == "-") {
+               toggleDisplay(e, 'none');
+            }
+         }
+      };
+      p.appendChild(button);
+      p.appendChild(document.createTextNode(' '));
+      button = document.createElement('INPUT');
+      button.type = 'BUTTON';
+      button.value = 'Expand All';
+      button.onclick = function() {
+         for (e of document.getElementsByTagName('H2')) {
+            if (e.innerHTML.substring(0, 1) == "+" || e.innerHTML.substring(0, 1) == "-") {
+               toggleDisplay(e, 'block');
+            }
+         }
+      };
+      p.appendChild(button);
+   }
+   addExpandCollapseAllButtons()
+
+
+   function toggleDisplay(obj, force) {
+      var e = divs[obj.id];
+      if (force == 'none' || e.style.display == 'block') {
+         e.style.display = 'none';
+         obj.innerHTML = "+ " + obj.innerHTML.substring(2);
+      } else if (force == 'block' || e.style.display == 'none') {
+         e.style.display = 'block';
+         obj.innerHTML = "- " + obj.innerHTML.substring(2);
+      }
+   }
+
+   function makeForms () {
+
+      var counter = 0;
+      var mainDiv = document.getElementById('main');
+
+      for (var name in data) {
+
+         var frameDiv = document.createElement('DIV');
+         frameDiv.classList.add("frame");
+         mainDiv.appendChild(frameDiv);
+
+         // h2 and collapse
+         var h2 = document.createElement('H2');
+         h2.id = counter++;
+         h2.innerHTML = "- " + data[name]['heading'];
+         h2.style.cursor = 'pointer';
+         h2.onclick = function() {
+            toggleDisplay(this);
+         };
+         frameDiv.appendChild(h2);
+
+         var span = document.createElement('SPAN');
+         span.id = name;
+         h2.appendChild(span);
+
+         var div = document.createElement('DIV');
+         divs[h2.id] = div;
+         div.style.display = 'block';
+         frameDiv.appendChild(div);
+         if (data[name].description) {
+            var par = document.createElement('P');
+            par.innerHTML = data[name].description;
+            div.appendChild(par);
+         }
+
+         // parse bibtex
+         var area = document.createElement('TEXTAREA');
+         area.placeholder = "Copy here some bibtex code like:\n\n"
+            + "@article{key,\n"
+            + "title={Something},\n"
+            + "author={Foo, Bar},\n"
+            + "...\n}";
+         area.style.height = "200px";
+         area.style.width = "100%";
+         area.style.display = "none";
+         div.appendChild(area);
+         var logdiv = document.createElement('DIV');
+         div.appendChild(logdiv);
+         textboxes[name] = {};
+         par = document.createElement('P');
+         div.appendChild(par);
+         var input = document.createElement('INPUT');
+         input.id = counter++;
+         input.type = 'BUTTON';
+         input.value = 'Press to import bibtex (eg. from Google Scholar)';
+         par.appendChild(input);
+         buttons[input.id] = {
+            textarea: area,
+            textboxes: textboxes[name],
+            data: data[name],
+            logdiv: logdiv
+         }
+         input.onclick = function() {
+            this.value = "Parse";
+            if (buttons[this.id].textarea.style.display == 'none') {
+               buttons[this.id].textarea.style.display = 'block';
+               return;
+            }
+            var dic = parseBibtex(buttons[this.id].textarea.value);
+            var data = buttons[this.id].data;
+            var log = "";
+            for (var found_field in dic) {
+               var tb = null;
+               for (var field in data) {
+                  if (!Array.isArray(data[field])) { // get rid of "description"
+                     continue;
+                  }
+                  if ( (data[field][BIBTEX]
+                           && data[field][BIBTEX].indexOf(found_field)!=-1)
+                        || (found_field == field)) {
+                     tb = buttons[this.id].textboxes[field];
+                     break;
+                  }
+               }
+               if (tb) {
+                  if (!tb.value) {
+                     tb.value = dic[found_field];
+                  } else {
+                     log += "<p>Field '"+found_field+"' already filled.</p>";
+                  }
+               } else {
+                  log += "<p>Unknown field '"+found_field+"'.</p>";
+               }
+               buttons[this.id].logdiv.innerHTML = log;
+            }
+         };
+
+         // all the fields
+         var table = document.createElement('TABLE');
+         div.appendChild(table);
+         for (var field in data[name]) {
+            if (!Array.isArray(data[name][field])) { // get rid of "description"
+               continue;
+            }
+            var tr = document.createElement('TR');
+            table.appendChild(tr);
+            table.style.width = "100%";
+            var td = document.createElement('TD');
+            tr.appendChild(td);
+            var span = document.createElement('SPAN');
+            td.appendChild(span);
+            var required = data[name][field][FLAGS] & REQ;
+            if (required) {
+               span.style.color = 'red';
+            }
+            var label = document.createTextNode(field + ': ');
+            span.appendChild(label);
+            var td = document.createElement('TD');
+            tr.appendChild(td);
+            //td.style.border = '1px black solid';
+            td.style.width = '100%';
+            var input = document.createElement('INPUT');
+            input.type = 'TEXTBOX';
+            textboxes[name][field] = input;
+            input.style.width = "100%";
+            td.appendChild(input);
+            var desc = data[name][field][DESCR];
+            if (!desc && field in field_descriptions) {
+               desc = field_descriptions[field];
+            }
+            if (desc) {
+               td.appendChild(document.createElement('BR'));
+               var span = document.createElement('SPAN');
+               span.classList.add('description');
+               td.appendChild(span);
+               span.innerHTML = '(' + desc + ')';
+            }
+         }
+
+         // buttons: reset
+         var par = document.createElement('P');
+         div.appendChild(par);
+         input = document.createElement('INPUT');
+         input.id = counter++;
+         input.type = 'BUTTON';
+         input.value = 'Reset';
+         par.appendChild(input);
+         par.appendChild(document.createTextNode(' '));
+         buttons[input.id] = {
+            textboxes: textboxes[name]
+         }
+         input.onclick = function() {
+            if (!confirm("Sure to reset?")) {
+               return;
+            }
+            for (var field in buttons[this.id].textboxes) {
+               var textbox = buttons[this.id].textboxes[field];
+               textbox.value = "";
+            }
+         };
+
+         // buttons: to_unicode
+         input = document.createElement('INPUT');
+         input.id = counter++;
+         input.type = 'BUTTON';
+         input.value = 'To Unicode';
+         par.appendChild(input);
+         par.appendChild(document.createTextNode(' '));
+         buttons[input.id] = {
+            textboxes: textboxes[name]
+         }
+         input.onclick = function() {
+            for (var field in buttons[this.id].textboxes) {
+               var textbox = buttons[this.id].textboxes[field];
+               if (textbox.value) {
+                  textbox.value = to_unicode(textbox.value);
+               }
+            }
+         };
+
+         // buttons: to_bibtex
+         input = document.createElement('INPUT');
+         input.id = counter++;
+         input.type = 'BUTTON';
+         input.value = 'To Bibtex';
+         par.appendChild(input);
+         par.appendChild(document.createTextNode(' '));
+         buttons[input.id] = {
+            textboxes: textboxes[name]
+         }
+         input.onclick = function() {
+            for (var field in buttons[this.id].textboxes) {
+               var textbox = buttons[this.id].textboxes[field];
+               if (textbox.value) {
+                  textbox.value = to_bibtex(textbox.value);
+               }
+            }
+         };
+
+         // buttons: Go!
+         input = document.createElement('INPUT');
+         input.id = counter++;
+         input.type = 'BUTTON';
+         input.value = 'Go!';
+         par.appendChild(input);
+         par.appendChild(document.createTextNode(' '));
+         input.onclick = function() {
+            var key = getKeyAndFields(buttons[this.id].textboxes);
+            var entry = '@'+buttons[this.id].entryType+'{'+key+',\n'; //}
+            var biblatex_dic = {};
+            for (var field in buttons[this.id].textboxes) {
+               var value = buttons[this.id].textboxes[field].value
+               var required = buttons[this.id].data[field][REQ] & REQ;
+               if (required && !value) {
+                  alert('no value for required field ' + field);
+               }
+               if (value) {
+                  //entry += field+'={'+escapeBibtex(value)+'},\n';
+                  entry += field+'={'+value+'},\n';
+               }
+            }
+            entry += "}";
+            buttons[this.id].textarea.value = entry + '\n';
+            buttons[this.id].textarea.style.display = 'block';
+         };
+
+         par = document.createElement('P');
+         div.appendChild(par);
+         par.innerHTML = 'Click on "to unicode" to '
+            + 'transform <code>{\\\'}e</code> to <code>é</code> (utf8), etc.';
+
+         // textarea to display the result
+         area = document.createElement('TEXTAREA');
+         area.style.height = "400px";
+         area.style.width = "100%";
+         area.style.display = 'none';
+         buttons[input.id] = {
+            entryType: name,
+            textarea: area,
+            textboxes: textboxes[name],
+            data: data[name]
+         }
+         div.appendChild(area);
+      }
+   }
+   makeForms();
+
+   </script>
+
+   </body>
+</html>
